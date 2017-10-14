@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">MetroPeryskop</string>
     <string name="scan_qr_code">Scan QR code</string>
+
+    <string-array name="stations_array">
+        <item>Shuttle Badminton</item>
+        <item>Tennis</item>
+        <item>FootBall</item>
+        <item>Basket Ball</item>
+        <item>Table Tennis</item>
+        <item>Chess</item>
+        <item>Hockey</item>
+        <item>Hockey</item>
+        <item>Hockey</item>
+        <item>Hockey</item>
+        <item>Hockey</item>
+    </string-array>
 </resources>
