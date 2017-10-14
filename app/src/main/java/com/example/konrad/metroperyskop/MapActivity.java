@@ -18,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MapActivity extends AppCompatActivity implements View.OnTouchListener
-
 {
     @BindView(R.id.stations_list) ListView stationList;
 
@@ -38,8 +37,8 @@ public class MapActivity extends AppCompatActivity implements View.OnTouchListen
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), StationMapActivity.class);
+                startActivity(intent);
             }
         });
     }
