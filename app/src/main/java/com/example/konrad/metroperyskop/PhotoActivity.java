@@ -26,7 +26,7 @@ public class PhotoActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String img = intent.getStringExtra(ScanActivity.IMG_KEY);
+        String img = ActivityResults.result;
         String text = intent.getStringExtra(ScanActivity.TEXT_KEY);
 
         textView.setText(text);
