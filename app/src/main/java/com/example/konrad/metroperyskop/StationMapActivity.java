@@ -55,13 +55,19 @@ public class StationMapActivity extends AppCompatActivity {
                         {
                             e.printStackTrace();
                         }
-                        if (isGood)
+                        if (isGood && type.equals("ELEVATOR"))
+                        {
+                            bt.setBackground(getDrawable(R.drawable.ic_elevator_green));
+                        } else if(!isGood && type.equals("ELEVATOR"))
+                        {
+                            bt.setBackground(getDrawable(R.drawable.ic_elevator_red));
+                        }
+                        else if(isGood)
                         {
                             bt.setBackground(getDrawable(R.drawable.ic_staris_green));
-                        } else
-                        {
-                            bt.setBackground(getDrawable(R.drawable.ic_stairs_red));
                         }
+                        else
+                            bt.setBackground(getDrawable(R.drawable.ic_stairs_red));
                     }
                 } catch (JSONException ex){}
             }});
