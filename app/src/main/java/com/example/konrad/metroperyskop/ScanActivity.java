@@ -27,7 +27,7 @@ import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
 
 public class ScanActivity extends AppCompatActivity {
-    public static final String IMG_KEY = "image.to.pass";
+    public static final String URL_KEY = "url.to.pass";
     public static final String TEXT_KEY = "text.to.pass";
     public static final int STATION_OFFSET = 1;
     public static final int POINT_OFFSET = 2;
@@ -81,9 +81,11 @@ public class ScanActivity extends AppCompatActivity {
                     json = new JSONObject(response);
                     String b64_data = json.getString("image");
                     String text = json.getString("text");
+                    String url = json.getString("url");
                     Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
                     ActivityResults.result = b64_data;
                     intent.putExtra(TEXT_KEY, text);
+                    intent.putExtra(URL_KEY, url);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -96,7 +98,6 @@ public class ScanActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         qrEader.initAndStart(mySurfaceView);
-        qrEader.start();
     }
 
     @Override

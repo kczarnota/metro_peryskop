@@ -19,6 +19,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.konrad.metroperyskop.ScanActivity.URL_KEY;
+
 public class StationMapActivity extends AppCompatActivity {
     public static final String IMG_KEY = "image.to.pass";
     public static final String TEXT_KEY = "text.to.pass";
@@ -87,9 +89,11 @@ public class StationMapActivity extends AppCompatActivity {
                     json = new JSONObject(response);
                     String b64_data = json.getString("image");
                     String text = json.getString("text");
+                    String url = json.getString("url");
                     Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
                     ActivityResults.result = b64_data;
                     intent.putExtra(TEXT_KEY, text);
+                    intent.putExtra(URL_KEY, url);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
