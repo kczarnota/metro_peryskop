@@ -26,8 +26,7 @@ import butterknife.ButterKnife;
 import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
 
-public class ScanActivity extends AppCompatActivity
-{
+public class ScanActivity extends AppCompatActivity {
     public static final String IMG_KEY = "image.to.pass";
     public static final String TEXT_KEY = "text.to.pass";
     public static final int STATION_OFFSET = 1;
@@ -35,13 +34,14 @@ public class ScanActivity extends AppCompatActivity
 
     private static final String TAG = ScanActivity.class.getSimpleName();
 
-    @BindView(R.id.camera_view) SurfaceView mySurfaceView;
+    @BindView(R.id.camera_view)
+    SurfaceView mySurfaceView;
     private QREader qrEader;
-    @BindView(R.id.text) TextView text;
+    @BindView(R.id.text)
+    TextView text;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
         ButterKnife.bind(this);
@@ -68,44 +68,28 @@ public class ScanActivity extends AppCompatActivity
                 .build();
     }
 
-    private void getData(String data)
-    {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String [] splitted =data.split(":");
-        String url ="http://79.143.190.138:8081/api/station/" + splitted[STATION_OFFSET]
-                + "/point/" + splitted[POINT_OFFSET];
-        Log.d(TAG, "getData: " + url);
+    private void getData(String data) {
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //TODO get image from http response
-                        JSONObject json = null;
-                        Log.d(TAG, "onResponse: ");
-                        try
-                        {
-                           json  = new JSONObject(response);
-                           String b64_data = json.getString("image");
-                           String text = json.getString("text");
-                           Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
-                           ActivityResults.result = b64_data;
-                           intent.putExtra(TEXT_KEY, text);
-                           startActivity(intent);
-                        } catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        String[] splitted = data.split(":");
+        HTTPConnect.call(this, "/api/station/" + splitted[STATION_OFFSET]
+                + "/point/" + splitted[POINT_OFFSET], new HttpResponseLamba() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: " + "That didnt work!");
+            public void processRequest(String response) {
+                JSONObject json = null;
+                Log.d(TAG, "onResponse: ");
+                try {
+                    json = new JSONObject(response);
+                    String b64_data = json.getString("image");
+                    String text = json.getString("text");
+                    Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
+                    ActivityResults.result = b64_data;
+                    intent.putExtra(TEXT_KEY, text);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
     }
 
     @Override
