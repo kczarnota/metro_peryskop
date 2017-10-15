@@ -30,33 +30,41 @@ public class StationMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_map);
 
-        HTTPConnect.call(this, "/api/station/" + "1", new HttpResponseLamba() {
+        HTTPConnect.call(this, "/api/station/" + "1", new HttpResponseLamba()
+        {
             @Override
-            public void processRequest(String response) {
+            public void processRequest(String response)
+            {
                 JSONObject json = null;
-                try {
+                try
+                {
                     json = new JSONObject(response);
                     View root = StationMapActivity.this.findViewById(R.id.station_background);
-                    for (int index = 0; index < ((ViewGroup) root).getChildCount(); ++index) {
+                    for (int index = 0; index < ((ViewGroup) root).getChildCount(); ++index)
+                    {
                         Button bt = (Button) ((ViewGroup) root).getChildAt(index);
                         String id = bt.getText().toString();
                         boolean isGood = true;
-                        try {
-                            isGood = json.getBoolean(id);
-                        } catch (JSONException e) {
+                        String type = null;
+                        try
+                        {
+                            JSONObject item = json.getJSONObject(id);
+                            isGood = item.getBoolean("open");
+                            type = item.getString("exitType");
+                        } catch (JSONException e)
+                        {
                             e.printStackTrace();
                         }
-                        if (isGood) {
+                        if (isGood)
+                        {
                             bt.setBackground(getDrawable(R.drawable.ic_staris_green));
-                        } else {
+                        } else
+                        {
                             bt.setBackground(getDrawable(R.drawable.ic_stairs_red));
                         }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+                } catch (JSONException ex){}
+            }});
     }
 
     public void stationClicked(View view) {
