@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:orientation="horizontal"
+    android:background="@color/our_background"
     tools:context="com.example.konrad.metroperyskop.MapActivity">
 
     <ImageView
@@ -17,5 +18,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center|left"
+        android:textColor="@android:color/white"
         android:padding="10dp" />
 </LinearLayout>

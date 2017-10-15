@@ -28,7 +28,6 @@ public class HTTPConnect {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Błąd połączenia z siecią", Toast.LENGTH_LONG).show();
             }
         });
         // Add the request to the RequestQueue.
