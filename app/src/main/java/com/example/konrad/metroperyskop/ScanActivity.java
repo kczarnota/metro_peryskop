@@ -20,11 +20,13 @@ import github.nisrulz.qreader.QREader;
 
 public class ScanActivity extends AppCompatActivity {
     public static final String URL_KEY = "url.to.pass";
+    public static final String ADDRESS_KEY = "address.to.pass";
     public static final String TEXT_KEY = "text.to.pass";
     public static final int STATION_OFFSET = 1;
     public static final int POINT_OFFSET = 2;
 
     private static final String TAG = ScanActivity.class.getSimpleName();
+    public static final String IS_WORKING_KEY = "working.to.pass";
 
     @BindView(R.id.camera_view)
     SurfaceView mySurfaceView;
@@ -62,7 +64,7 @@ public class ScanActivity extends AppCompatActivity {
 
     private void getData(String data) {
 
-        String[] splitted = data.split(":");
+        final String[] splitted = data.split(":");
         HTTPConnect.call(this, "/api/station/" + splitted[STATION_OFFSET]
                 + "/point/" + splitted[POINT_OFFSET], new HttpResponseLamba() {
             @Override
@@ -74,10 +76,14 @@ public class ScanActivity extends AppCompatActivity {
                     String b64_data = json.getString("image");
                     String text = json.getString("text");
                     String url = json.getString("url");
+                    String address = json.getString("address");
                     Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
                     ActivityResults.result = b64_data;
                     intent.putExtra(TEXT_KEY, text);
                     intent.putExtra(URL_KEY, url);
+                    intent.putExtra(ADDRESS_KEY, address);
+                    intent.putExtra("station", splitted[STATION_OFFSET]);
+                    intent.putExtra("point", splitted[POINT_OFFSET]);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();

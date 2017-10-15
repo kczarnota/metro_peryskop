@@ -19,6 +19,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.konrad.metroperyskop.ScanActivity.ADDRESS_KEY;
+import static com.example.konrad.metroperyskop.ScanActivity.IS_WORKING_KEY;
 import static com.example.konrad.metroperyskop.ScanActivity.URL_KEY;
 
 public class StationMapActivity extends AppCompatActivity {
@@ -32,52 +34,43 @@ public class StationMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_map);
 
-        HTTPConnect.call(this, "/api/station/" + "1", new HttpResponseLamba()
-        {
+        HTTPConnect.call(this, "/api/station/" + "1", new HttpResponseLamba() {
             @Override
-            public void processRequest(String response)
-            {
+            public void processRequest(String response) {
                 JSONObject json = null;
-                try
-                {
+                try {
                     json = new JSONObject(response);
                     View root = StationMapActivity.this.findViewById(R.id.station_background);
-                    for (int index = 0; index < ((ViewGroup) root).getChildCount(); ++index)
-                    {
+                    for (int index = 0; index < ((ViewGroup) root).getChildCount(); ++index) {
                         Button bt = (Button) ((ViewGroup) root).getChildAt(index);
                         String id = bt.getText().toString();
                         boolean isGood = true;
                         String type = null;
-                        try
-                        {
+                        try {
                             JSONObject item = json.getJSONObject(id);
                             isGood = item.getBoolean("open");
                             type = item.getString("exitType");
-                        } catch (JSONException e)
-                        {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if (isGood && type.equals("ELEVATOR"))
-                        {
+                        if (isGood && type.equals("ELEVATOR")) {
                             bt.setBackground(getDrawable(R.drawable.ic_elevator_green));
-                        } else if(!isGood && type.equals("ELEVATOR"))
-                        {
+                        } else if (!isGood && type.equals("ELEVATOR")) {
                             bt.setBackground(getDrawable(R.drawable.ic_elevator_red));
-                        }
-                        else if(isGood)
-                        {
+                        } else if (isGood) {
                             bt.setBackground(getDrawable(R.drawable.ic_staris_green));
-                        }
-                        else
+                        } else
                             bt.setBackground(getDrawable(R.drawable.ic_stairs_red));
                     }
-                } catch (JSONException ex){}
-            }});
+                } catch (JSONException ex) {
+                }
+            }
+        });
     }
 
     public void stationClicked(View view) {
-        String stationId = "1";
-        String placeId = ((Button) view).getText().toString();
+        final String stationId = "1";
+        final String placeId = ((Button) view).getText().toString();
 
         Toast.makeText(this, "Pobieranie zdjęcia wyjscia...", Toast.LENGTH_LONG).show();
         HTTPConnect.call(this, "/api/station/" + stationId + "/point/" + placeId, new HttpResponseLamba() {
@@ -90,21 +83,58 @@ public class StationMapActivity extends AppCompatActivity {
                     String b64_data = json.getString("image");
                     String text = json.getString("text");
                     String url = json.getString("url");
+                    String address = json.getString("address");
                     Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
                     ActivityResults.result = b64_data;
                     intent.putExtra(TEXT_KEY, text);
                     intent.putExtra(URL_KEY, url);
+                    intent.putExtra(ADDRESS_KEY, address);
+                    intent.putExtra("station", stationId);
+                    intent.putExtra("point", placeId);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-        Toast.makeText(this, "Pobieranie zdjęcia wyjscia...",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Pobieranie zdjęcia wyjscia...", Toast.LENGTH_LONG).show();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        HTTPConnect.call(this, "/api/station/" + "1", new HttpResponseLamba() {
+            @Override
+            public void processRequest(String response) {
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(response);
+                    View root = StationMapActivity.this.findViewById(R.id.station_background);
+                    for (int index = 0; index < ((ViewGroup) root).getChildCount(); ++index) {
+                        Button bt = (Button) ((ViewGroup) root).getChildAt(index);
+                        String id = bt.getText().toString();
+                        boolean isGood = true;
+                        String type = null;
+                        try {
+                            JSONObject item = json.getJSONObject(id);
+                            isGood = item.getBoolean("open");
+                            type = item.getString("exitType");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (isGood && type.equals("ELEVATOR")) {
+                            bt.setBackground(getDrawable(R.drawable.ic_elevator_green));
+                        } else if (!isGood && type.equals("ELEVATOR")) {
+                            bt.setBackground(getDrawable(R.drawable.ic_elevator_red));
+                        } else if (isGood) {
+                            bt.setBackground(getDrawable(R.drawable.ic_staris_green));
+                        } else
+                            bt.setBackground(getDrawable(R.drawable.ic_stairs_red));
+                    }
+                } catch (JSONException ex) {
+                }
+            }
+        });
+
     }
 }
