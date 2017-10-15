@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +66,7 @@ public class PhotoActivity extends AppCompatActivity {
 
         String[] adds = getResources().getStringArray(R.array.ads_array);
         ArrayList<String> ads2 = new ArrayList<>(Arrays.asList(adds));
-        addList.setAdapter(new StationAdapter(this, R.layout.list_item, ads2, adds.length));
+        addList.setAdapter(new AdsAdapter(this, R.layout.list_item, ads2, adds.length));
 
         HTTPConnect.call(this, "/api/station/" + this.stationId, new HttpResponseLamba() {
             @Override
