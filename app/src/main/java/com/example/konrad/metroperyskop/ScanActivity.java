@@ -1,6 +1,8 @@
 package com.example.konrad.metroperyskop;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +45,7 @@ public class ScanActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
         ButterKnife.bind(this);
+        final Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         qrEader = new QREader.Builder(this, mySurfaceView, new QRDataListener() {
             @Override
@@ -52,6 +55,7 @@ public class ScanActivity extends AppCompatActivity
                     @Override
                     public void run() {
                         //text.setText(data);
+                        v.vibrate(500);
                         getData(data);
                         qrEader.stop();
                     }
