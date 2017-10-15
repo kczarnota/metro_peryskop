@@ -39,6 +39,5 @@
     <string-array name="ads_array">
         <item>Reklama 1</item>
         <item>Reklama 2</item>
-        <item>Reklama 3</item>
     </string-array>
 </resources>
