@@ -2,17 +2,37 @@
     <string name="app_name">MetroPeryskop</string>
     <string name="scan_qr_code">Scan QR code</string>
 
-    <string-array name="stations_array">
-        <item>Shuttle Badminton</item>
-        <item>Tennis</item>
-        <item>FootBall</item>
-        <item>Basket Ball</item>
-        <item>Table Tennis</item>
-        <item>Chess</item>
-        <item>Hockey</item>
-        <item>Hockey</item>
-        <item>Hockey</item>
-        <item>Hockey</item>
-        <item>Hockey</item>
+    <string-array name="stations_array_first">
+        <item>Kabaty</item>
+        <item>Natolin</item>
+        <item>Imielin</item>
+        <item>Stokłosy</item>
+        <item>Ursynów</item>
+        <item>Służew</item>
+        <item>Wilanowska</item>
+        <item>Wierzbno</item>
+        <item>Racławicka</item>
+        <item>Pole Mokotowskie</item>
+        <item>Politechnika</item>
+        <item>Centrum</item>
+        <item>Świętokrzyska</item>
+        <item>Ratusz Arsenał</item>
+        <item>Dworzec Gdański</item>
+        <item>Plac Wilsona</item>
+        <item>Marymont</item>
+        <item>Słodowiec</item>
+        <item>Stare Bielany</item>
+        <item>Wawrzyszew</item>
+        <item>Młociny</item>
+    </string-array>
+
+    <string-array name="stations_array_second">
+        <item>Rondo Daszyńskiego</item>
+        <item>Rondo ONZ</item>
+        <item>Świętokrzyska</item>
+        <item>Nowy Świat-Uniwersytet</item>
+        <item>Centrum Nauki Kopernik</item>
+        <item>Stadion Narodowy</item>
+        <item>Dworzec Wileński</item>
     </string-array>
 </resources>

@@ -127,8 +127,6 @@ public class StationMapActivity extends AppCompatActivity
         // Add the request to the RequestQueue.
         Toast.makeText(this, "Pobieranie zdjęcia wyjscia...",Toast.LENGTH_LONG).show();
         queue.add(stringRequest);
-
-
     }
 
     @Override

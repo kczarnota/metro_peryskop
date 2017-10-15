@@ -14,6 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,10 +31,15 @@ public class MapActivity extends AppCompatActivity implements View.OnTouchListen
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
-        String[] stations = getResources().getStringArray(R.array.stations_array);
+        String[] stations1 = getResources().getStringArray(R.array.stations_array_first);
+        String[] stations2 = getResources().getStringArray(R.array.stations_array_second);
         //Row layout defined by Android: android.R.layout.simple_list_item_1
-        stationList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.list_item, stations));
+        //stationList.setAdapter(new ArrayAdapter<String>(this,
+        ArrayList<String> stat1 = new ArrayList<>(Arrays.asList(stations1));
+        ArrayList<String> stat2 = new ArrayList<>(Arrays.asList(stations2));
+        stat1.addAll(stat2);
+        stationList.setAdapter(new StationAdapter(this,
+                R.layout.list_item, stat1, stations1.length));
         stationList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
