@@ -5,6 +5,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,6 +79,13 @@ public class MapActivity extends AppCompatActivity implements View.OnTouchListen
                 startActivity(intent);
             }
         });
+
+        FloatingActionButton myFab = MapActivity.this.findViewById(R.id.scan_qr);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openQrScanActivity();
+            }
+        });
     }
 
     private void sendData(String data) {
@@ -106,6 +114,11 @@ public class MapActivity extends AppCompatActivity implements View.OnTouchListen
         });
     }
 
+    private void openQrScanActivity() {
+        Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+        startActivity(intent);
+    }
+
     private String parseRecord(NdefRecord record)
     {
         byte [] bytes = record.getPayload();
@@ -116,25 +129,5 @@ public class MapActivity extends AppCompatActivity implements View.OnTouchListen
     public boolean onTouch(View view, MotionEvent motionEvent)
     {
         return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.map_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.scan_qr:
-                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }
