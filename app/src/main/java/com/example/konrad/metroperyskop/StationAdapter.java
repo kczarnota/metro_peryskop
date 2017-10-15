@@ -37,9 +37,9 @@ public class StationAdapter extends ArrayAdapter<String>
         ImageView imageView = (ImageView) v.findViewById(R.id.image_item);
         textView.setText(stationList.get(position));
         if(position >= positionChange)
-            imageView.setBackground(this.getContext().getDrawable(R.drawable.ic_stacja_lista_blue));
+            imageView.setBackground(this.getContext().getDrawable(R.drawable.ic_stacja_lista_red2_01));
         else
-            imageView.setBackground(this.getContext().getDrawable(R.drawable.ic_stacja_lista_red));
+            imageView.setBackground(this.getContext().getDrawable(R.drawable.ic_stacja_lista_blue_2_01));
         return v;
     }
 }

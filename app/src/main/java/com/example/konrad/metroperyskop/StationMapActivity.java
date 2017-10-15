@@ -72,7 +72,7 @@ public class StationMapActivity extends AppCompatActivity {
         final String stationId = "1";
         final String placeId = ((Button) view).getText().toString();
 
-        Toast.makeText(this, "Pobieranie zdjęcia wyjscia...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Pobieranie zdjęcia wyjscia...", Toast.LENGTH_SHORT).show();
         HTTPConnect.call(this, "/api/station/" + stationId + "/point/" + placeId, new HttpResponseLamba() {
             @Override
             public void processRequest(String response) {
@@ -97,7 +97,6 @@ public class StationMapActivity extends AppCompatActivity {
                 }
             }
         });
-        Toast.makeText(this, "Pobieranie zdjęcia wyjscia...", Toast.LENGTH_LONG).show();
     }
 
     @Override
