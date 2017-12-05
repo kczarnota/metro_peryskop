@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapActivity">
+        <activity android:name=".view.StationListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -26,11 +26,11 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScanActivity">
+        <activity android:name=".view.ScanActivity">
         </activity>
-        <activity android:name=".PhotoActivity">
+        <activity android:name=".view.PhotoActivity">
         </activity>
-        <activity android:name=".StationMapActivity">
+        <activity android:name=".view.StationMapActivity">
         </activity>
     </application>
 

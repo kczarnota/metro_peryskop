@@ -1,4 +1,4 @@
-package com.example.konrad.metroperyskop;
+package com.example.konrad.metroperyskop.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,30 +13,36 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.konrad.metroperyskop.view.adapter.AdsAdapter;
+import com.example.konrad.metroperyskop.net.ApiCaller;
+import com.example.konrad.metroperyskop.utils.Constants;
+import com.example.konrad.metroperyskop.R;
+import com.example.konrad.metroperyskop.model.Station;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class PhotoActivity extends AppCompatActivity {
+public class PhotoActivity extends AppCompatActivity implements Callback<Station>
+{
 
     public String streetViewUrl = null;
 
     @BindView(R.id.image)
-    ImageView view;
+    public ImageView view;
     @BindView(R.id.photo_name)
-    TextView name;
+    public TextView name;
     @BindView(R.id.photo_address)
-    TextView address;
+    public TextView address;
     @BindView(R.id.ads)
-    ListView addList;
+    public ListView addList;
     @BindView(R.id.photo_checkbox)
-    CheckBox checkBox;
+    public CheckBox checkBox;
     private String stationId;
     private String pointId;
 
@@ -48,12 +54,12 @@ public class PhotoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String img = ActivityResults.result;
-        String text = intent.getStringExtra(ScanActivity.TEXT_KEY);
-        this.streetViewUrl = intent.getStringExtra(ScanActivity.URL_KEY);
-        String adr = intent.getStringExtra(ScanActivity.ADDRESS_KEY);
+        String text = intent.getStringExtra(Constants.TEXT_KEY);
+        this.streetViewUrl = intent.getStringExtra(Constants.URL_KEY);
+        String adr = intent.getStringExtra(Constants.ADDRESS_KEY);
         this.stationId = intent.getStringExtra("station");
         this.pointId = intent.getStringExtra("point");
-        boolean isWorking = intent.getBooleanExtra(ScanActivity.IS_WORKING_KEY, true);
+        boolean isWorking = intent.getBooleanExtra(Constants.IS_WORKING_KEY, true);
 
         checkBox.setChecked(isWorking);
 
@@ -66,21 +72,9 @@ public class PhotoActivity extends AppCompatActivity {
 
         String[] adds = getResources().getStringArray(R.array.ads_array);
         ArrayList<String> ads2 = new ArrayList<>(Arrays.asList(adds));
-        addList.setAdapter(new AdsAdapter(this, R.layout.list_item, ads2, adds.length));
+        addList.setAdapter(new AdsAdapter(this, R.layout.list_item, ads2));
 
-        HTTPConnect.call(this, "/api/station/" + this.stationId, new HttpResponseLamba() {
-            @Override
-            public void processRequest(String response) {
-                JSONObject json = null;
-                try {
-                    json = new JSONObject(response);
-                    JSONObject item = json.getJSONObject(pointId);
-                    boolean isGood = item.getBoolean("open");
-                    checkBox.setChecked(isGood);
-                } catch (JSONException ex) {
-                }
-            }
-        });
+        ApiCaller.makeStationApiCall(stationId, this);
     }
 
     public void streetView(View view) {
@@ -100,13 +94,19 @@ public class PhotoActivity extends AppCompatActivity {
             newState = "false";
 
         }
-        String url = "/api/change/station/" + this.stationId + "/point/" + this.pointId + "/state/" + newState;
+        ApiCaller.makeStationChangeApiCall(stationId, pointId, newState, this);
+    }
 
+    @Override
+    public void onResponse(Call<Station> call, Response<Station> response)
+    {
+        Station station = response.body();
+        checkBox.setChecked(station.findPoint(pointId).open);
+    }
 
-        HTTPConnect.call(this, url, new HttpResponseLamba() {
-            @Override
-            public void processRequest(String response) {
-            }
-        });
+    @Override
+    public void onFailure(Call<Station> call, Throwable t)
+    {
+        t.printStackTrace();
     }
 }

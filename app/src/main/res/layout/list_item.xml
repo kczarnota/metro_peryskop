@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:orientation="horizontal"
-    tools:context="com.example.konrad.metroperyskop.MapActivity"
+    tools:context="com.example.konrad.metroperyskop.view.StationListActivity"
     android:background="@color/our_background">
 
 

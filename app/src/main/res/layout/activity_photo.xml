@@ -8,7 +8,7 @@
     android:background="@color/our_background"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context="com.example.konrad.metroperyskop.PhotoActivity">
+    tools:context="com.example.konrad.metroperyskop.view.PhotoActivity">
 
     <ImageView
         android:id="@+id/image"

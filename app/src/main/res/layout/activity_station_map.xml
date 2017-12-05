@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.konrad.metroperyskop.StationMapActivity"
+    tools:context="com.example.konrad.metroperyskop.view.StationMapActivity"
     android:background="@drawable/ic_stacja_plan_bg_01"
     android:id="@+id/station_background">
 
